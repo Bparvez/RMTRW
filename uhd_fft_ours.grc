@@ -38,7 +38,7 @@
     </param>
     <param>
       <key>generate_options</key>
-      <value>qt_gui</value>
+      <value>no_gui</value>
     </param>
     <param>
       <key>hier_block_src_path</key>
@@ -66,7 +66,7 @@
     </param>
     <param>
       <key>run_options</key>
-      <value>prompt</value>
+      <value>run</value>
     </param>
     <param>
       <key>run</key>
@@ -187,7 +187,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(744, 372)</value>
+      <value>(672, 372)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -214,7 +214,7 @@
     <key>blocks_file_sink</key>
     <param>
       <key>append</key>
-      <value>True</value>
+      <value>False</value>
     </param>
     <param>
       <key>alias</key>
@@ -238,7 +238,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1112, 351)</value>
+      <value>(1112, 479)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -262,7 +262,7 @@
     </param>
   </block>
   <block>
-    <key>blocks_nlog10_ff</key>
+    <key>blocks_head</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -281,7 +281,58 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(944, 365)</value>
+      <value>(1032, 365)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_head_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>num_items</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1024</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_nlog10_ff</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(856, 365)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -332,7 +383,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(312, 372)</value>
+      <value>(272, 372)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -528,7 +579,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(504, 344)</value>
+      <value>(440, 344)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -763,7 +814,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>12e6</value>
+      <value>10.666667e6</value>
     </param>
   </block>
   <block>
@@ -2024,8 +2075,14 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>blocks_nlog10_ff_0</source_block_id>
+    <source_block_id>blocks_head_0</source_block_id>
     <sink_block_id>blocks_file_sink_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_nlog10_ff_0</source_block_id>
+    <sink_block_id>blocks_head_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>

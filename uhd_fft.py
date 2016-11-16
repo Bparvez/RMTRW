@@ -5,20 +5,9 @@
 # Title: UHD FFT
 # Author: Bilal
 # Description: UHD FFT Waveform Plotter
-# Generated: Sat Nov 12 12:31:24 2016
+# Generated: Wed Nov 16 10:34:48 2016
 ##################################################
 
-if __name__ == '__main__':
-    import ctypes
-    import sys
-    if sys.platform.startswith('linux'):
-        try:
-            x11 = ctypes.cdll.LoadLibrary('libX11.so')
-            x11.XInitThreads()
-        except:
-            print "Warning: failed to XInitThreads()"
-
-from PyQt4 import Qt
 from gnuradio import blocks
 from gnuradio import eng_notation
 from gnuradio import fft
@@ -29,34 +18,13 @@ from gnuradio.fft import window
 from gnuradio.filter import firdes
 from optparse import OptionParser
 import numpy
-import sys
 import time
 
 
-class uhd_fft(gr.top_block, Qt.QWidget):
+class uhd_fft(gr.top_block):
 
-    def __init__(self, antenna="RX2", args="fpga=usrp1_fpga_4rx.rbf ", fft_size=1024, freq=2.412e9, gain=45, maxrate=0, samp_rate=12e6, spec="A:0", stream_args="", update_rate=.1, wire_format=""):
+    def __init__(self, antenna="RX2", args="fpga=usrp1_fpga_4rx.rbf ", fft_size=1024, freq=2.412e9, gain=45, maxrate=0, samp_rate=10.666667e6, spec="A:0", stream_args="", update_rate=.1, wire_format=""):
         gr.top_block.__init__(self, "UHD FFT")
-        Qt.QWidget.__init__(self)
-        self.setWindowTitle("UHD FFT")
-        try:
-            self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
-        except:
-            pass
-        self.top_scroll_layout = Qt.QVBoxLayout()
-        self.setLayout(self.top_scroll_layout)
-        self.top_scroll = Qt.QScrollArea()
-        self.top_scroll.setFrameStyle(Qt.QFrame.NoFrame)
-        self.top_scroll_layout.addWidget(self.top_scroll)
-        self.top_scroll.setWidgetResizable(True)
-        self.top_widget = Qt.QWidget()
-        self.top_scroll.setWidget(self.top_widget)
-        self.top_layout = Qt.QVBoxLayout(self.top_widget)
-        self.top_grid_layout = Qt.QGridLayout()
-        self.top_layout.addLayout(self.top_grid_layout)
-
-        self.settings = Qt.QSettings("GNU Radio", "uhd_fft")
-        self.restoreGeometry(self.settings.value("geometry").toByteArray())
 
         ##################################################
         # Parameters
@@ -92,7 +60,8 @@ class uhd_fft(gr.top_block, Qt.QWidget):
         self.fft_vxx_0 = fft.fft_vcc(fft_size, True, (window.blackmanharris(1024)), True, 1)
         self.blocks_stream_to_vector_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fft_size)
         self.blocks_nlog10_ff_0 = blocks.nlog10_ff(1, 1024, 0)
-        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_float*1024, "/home/bilal/Desktop/RMTRW/value", True)
+        self.blocks_head_0 = blocks.head(gr.sizeof_float*1024, 1)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_float*1024, "/home/bilal/Desktop/RMTRW/value", False)
         self.blocks_file_sink_0.set_unbuffered(True)
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(1024)
 
@@ -100,16 +69,11 @@ class uhd_fft(gr.top_block, Qt.QWidget):
         # Connections
         ##################################################
         self.connect((self.blocks_complex_to_mag_squared_0, 0), (self.blocks_nlog10_ff_0, 0))    
-        self.connect((self.blocks_nlog10_ff_0, 0), (self.blocks_file_sink_0, 0))    
+        self.connect((self.blocks_head_0, 0), (self.blocks_file_sink_0, 0))    
+        self.connect((self.blocks_nlog10_ff_0, 0), (self.blocks_head_0, 0))    
         self.connect((self.blocks_stream_to_vector_0, 0), (self.fft_vxx_0, 0))    
         self.connect((self.fft_vxx_0, 0), (self.blocks_complex_to_mag_squared_0, 0))    
         self.connect((self.uhd_usrp_source_0, 0), (self.blocks_stream_to_vector_0, 0))    
-
-    def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "uhd_fft")
-        self.settings.setValue("geometry", self.saveGeometry())
-        event.accept()
-
 
     def get_antenna(self):
         return self.antenna
@@ -204,7 +168,7 @@ def argument_parser():
         "", "--maxrate", dest="maxrate", type="intx", default=0,
         help="Set max [default=%default]")
     parser.add_option(
-        "-s", "--samp-rate", dest="samp_rate", type="eng_float", default=eng_notation.num_to_str(12e6),
+        "-s", "--samp-rate", dest="samp_rate", type="eng_float", default=eng_notation.num_to_str(10.666667e6),
         help="Set Sample Rate [default=%default]")
     parser.add_option(
         "", "--spec", dest="spec", type="string", default="A:0",
@@ -225,21 +189,9 @@ def main(top_block_cls=uhd_fft, options=None):
     if options is None:
         options, _ = argument_parser().parse_args()
 
-    from distutils.version import StrictVersion
-    if StrictVersion(Qt.qVersion()) >= StrictVersion("4.5.0"):
-        style = gr.prefs().get_string('qtgui', 'style', 'raster')
-        Qt.QApplication.setGraphicsSystem(style)
-    qapp = Qt.QApplication(sys.argv)
-
     tb = top_block_cls(antenna=options.antenna, args=options.args, fft_size=options.fft_size, freq=options.freq, gain=options.gain, maxrate=options.maxrate, samp_rate=options.samp_rate, spec=options.spec, stream_args=options.stream_args, update_rate=options.update_rate, wire_format=options.wire_format)
     tb.start()
-    tb.show()
-
-    def quitting():
-        tb.stop()
-        tb.wait()
-    qapp.connect(qapp, Qt.SIGNAL("aboutToQuit()"), quitting)
-    qapp.exec_()
+    tb.wait()
 
 
 if __name__ == '__main__':
