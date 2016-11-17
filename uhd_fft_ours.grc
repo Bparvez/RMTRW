@@ -187,7 +187,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(672, 372)</value>
+      <value>(656, 372)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -254,7 +254,7 @@
     </param>
     <param>
       <key>unbuffered</key>
-      <value>True</value>
+      <value>False</value>
     </param>
     <param>
       <key>vlen</key>
@@ -281,7 +281,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1032, 365)</value>
+      <value>(1096, 365)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -332,7 +332,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(856, 365)</value>
+      <value>(856, 358)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -360,7 +360,7 @@
     </param>
     <param>
       <key>n</key>
-      <value>1</value>
+      <value>10</value>
     </param>
   </block>
   <block>
@@ -383,7 +383,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(272, 372)</value>
+      <value>(256, 372)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -579,7 +579,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(440, 344)</value>
+      <value>(424, 344)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -587,7 +587,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>fft_vxx_0</value>
+      <value>fft_vcc_0</value>
     </param>
     <param>
       <key>type</key>
@@ -607,7 +607,7 @@
     </param>
     <param>
       <key>shift</key>
-      <value>True</value>
+      <value>False</value>
     </param>
     <param>
       <key>window</key>
@@ -697,7 +697,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>45</value>
+      <value>0</value>
     </param>
   </block>
   <block>
@@ -814,7 +814,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>10.666667e6</value>
+      <value>10e6</value>
     </param>
   </block>
   <block>
@@ -911,7 +911,7 @@
     </param>
     <param>
       <key>ant0</key>
-      <value>TX/RX</value>
+      <value>RX2</value>
     </param>
     <param>
       <key>bw0</key>
@@ -1831,7 +1831,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(40, 330)</value>
+      <value>(16, 330)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1847,7 +1847,7 @@
     </param>
     <param>
       <key>clock_source0</key>
-      <value></value>
+      <value>gpsdo</value>
     </param>
     <param>
       <key>sd_spec0</key>
@@ -1855,7 +1855,7 @@
     </param>
     <param>
       <key>time_source0</key>
-      <value></value>
+      <value>gpsdo</value>
     </param>
     <param>
       <key>clock_source1</key>
@@ -1967,7 +1967,7 @@
     </param>
     <param>
       <key>stream_args</key>
-      <value>stream_args</value>
+      <value></value>
     </param>
     <param>
       <key>stream_chans</key>
@@ -1979,7 +1979,7 @@
     </param>
     <param>
       <key>otw</key>
-      <value>wire_format</value>
+      <value></value>
     </param>
   </block>
   <block>
@@ -2088,12 +2088,12 @@
   </connection>
   <connection>
     <source_block_id>blocks_stream_to_vector_0</source_block_id>
-    <sink_block_id>fft_vxx_0</sink_block_id>
+    <sink_block_id>fft_vcc_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>fft_vxx_0</source_block_id>
+    <source_block_id>fft_vcc_0</source_block_id>
     <sink_block_id>blocks_complex_to_mag_squared_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
