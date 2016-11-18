@@ -5,7 +5,7 @@
 # Title: UHD FFT
 # Author: Bilal
 # Description: UHD FFT Waveform Plotter
-# Generated: Thu Nov 17 09:28:18 2016
+# Generated: Thu Nov 17 16:02:08 2016
 ##################################################
 
 from gnuradio import blocks
@@ -23,7 +23,7 @@ import time
 
 class uhd_fft(gr.top_block):
 
-    def __init__(self, antenna="RX2", args="fpga=usrp1_fpga_4rx.rbf ", fft_size=1024, freq=2.412e9, gain=0, maxrate=0, spec="A:0", stream_args="", update_rate=.1, wire_format="", samp_rate=10e6):
+    def __init__(self, antenna="RX2", args="fpga=usrp1_fpga_4rx.rbf ", fft_size=1024, freq=2.412e9, gain=0, maxrate=0, samp_rate=10e6, spec="A:0", stream_args="", update_rate=.1, wire_format=""):
         gr.top_block.__init__(self, "UHD FFT")
 
         ##################################################
@@ -35,11 +35,11 @@ class uhd_fft(gr.top_block):
         self.freq = freq
         self.gain = gain
         self.maxrate = maxrate
+        self.samp_rate = samp_rate
         self.spec = spec
         self.stream_args = stream_args
         self.update_rate = update_rate
         self.wire_format = wire_format
-        self.samp_rate = samp_rate
 
         ##################################################
         # Blocks
@@ -62,7 +62,7 @@ class uhd_fft(gr.top_block):
         self.fft_vcc_0 = fft.fft_vcc(fft_size, True, (window.blackmanharris(1024)), False, 1)
         self.blocks_stream_to_vector_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fft_size)
         self.blocks_nlog10_ff_0 = blocks.nlog10_ff(10, 1024, 0)
-        self.blocks_head_0 = blocks.head(gr.sizeof_float*1024, 1)
+        self.blocks_head_0 = blocks.head(gr.sizeof_float*1024, 5)
         self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_float*1024, "/home/bilal/Desktop/RMTRW/value", False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(1024)
@@ -116,6 +116,14 @@ class uhd_fft(gr.top_block):
     def set_maxrate(self, maxrate):
         self.maxrate = maxrate
 
+    def get_samp_rate(self):
+        return self.samp_rate
+
+    def set_samp_rate(self, samp_rate):
+        self.samp_rate = samp_rate
+        self.uhd_usrp_source_0.set_samp_rate(self.samp_rate)
+        self.uhd_usrp_source_0.set_bandwidth(self.samp_rate, 0)
+
     def get_spec(self):
         return self.spec
 
@@ -140,14 +148,6 @@ class uhd_fft(gr.top_block):
     def set_wire_format(self, wire_format):
         self.wire_format = wire_format
 
-    def get_samp_rate(self):
-        return self.samp_rate
-
-    def set_samp_rate(self, samp_rate):
-        self.samp_rate = samp_rate
-        self.uhd_usrp_source_0.set_samp_rate(self.samp_rate)
-        self.uhd_usrp_source_0.set_bandwidth(self.samp_rate, 0)
-
 
 def argument_parser():
     parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
@@ -170,6 +170,9 @@ def argument_parser():
         "", "--maxrate", dest="maxrate", type="intx", default=0,
         help="Set max [default=%default]")
     parser.add_option(
+        "-s", "--samp-rate", dest="samp_rate", type="eng_float", default=eng_notation.num_to_str(10e6),
+        help="Set Sample Rate [default=%default]")
+    parser.add_option(
         "", "--spec", dest="spec", type="string", default="A:0",
         help="Set Subdev [default=%default]")
     parser.add_option(
@@ -181,9 +184,6 @@ def argument_parser():
     parser.add_option(
         "", "--wire-format", dest="wire_format", type="string", default="",
         help="Set Wire format [default=%default]")
-    parser.add_option(
-        "-s", "--samp-rate", dest="samp_rate", type="eng_float", default=eng_notation.num_to_str(10e6),
-        help="Set Sample Rate [default=%default]")
     return parser
 
 
@@ -191,7 +191,7 @@ def main(top_block_cls=uhd_fft, options=None):
     if options is None:
         options, _ = argument_parser().parse_args()
 
-    tb = top_block_cls(antenna=options.antenna, args=options.args, fft_size=options.fft_size, freq=options.freq, gain=options.gain, maxrate=options.maxrate, spec=options.spec, stream_args=options.stream_args, update_rate=options.update_rate, wire_format=options.wire_format, samp_rate=options.samp_rate)
+    tb = top_block_cls(antenna=options.antenna, args=options.args, fft_size=options.fft_size, freq=options.freq, gain=options.gain, maxrate=options.maxrate, samp_rate=options.samp_rate, spec=options.spec, stream_args=options.stream_args, update_rate=options.update_rate, wire_format=options.wire_format)
     tb.start()
     tb.wait()
 
