@@ -5,7 +5,7 @@
 # Title: UHD FFT
 # Author: Bilal
 # Description: UHD FFT Waveform Plotter
-# Generated: Thu Nov 17 16:02:08 2016
+# Generated: Sat Nov 19 14:32:00 2016
 ##################################################
 
 from gnuradio import blocks
@@ -61,8 +61,8 @@ class uhd_fft(gr.top_block):
         self.uhd_usrp_source_0.set_bandwidth(samp_rate, 0)
         self.fft_vcc_0 = fft.fft_vcc(fft_size, True, (window.blackmanharris(1024)), False, 1)
         self.blocks_stream_to_vector_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fft_size)
-        self.blocks_nlog10_ff_0 = blocks.nlog10_ff(10, 1024, 0)
-        self.blocks_head_0 = blocks.head(gr.sizeof_float*1024, 5)
+        self.blocks_nlog10_ff_0 = blocks.nlog10_ff(10, 1024, -60)
+        self.blocks_head_0 = blocks.head(gr.sizeof_float*1024, 1)
         self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_float*1024, "/home/bilal/Desktop/RMTRW/value", False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(1024)

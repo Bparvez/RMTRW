@@ -301,7 +301,7 @@
     </param>
     <param>
       <key>num_items</key>
-      <value>5</value>
+      <value>1</value>
     </param>
     <param>
       <key>type</key>
@@ -356,7 +356,7 @@
     </param>
     <param>
       <key>k</key>
-      <value>0</value>
+      <value>-60</value>
     </param>
     <param>
       <key>n</key>
