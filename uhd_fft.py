@@ -5,7 +5,7 @@
 # Title: UHD FFT
 # Author: Bilal
 # Description: UHD FFT Waveform Plotter
-# Generated: Sun Nov 20 21:10:17 2016
+# Generated: Mon Nov 21 10:12:07 2016
 ##################################################
 
 from gnuradio import blocks
@@ -23,7 +23,7 @@ import time
 
 class uhd_fft(gr.top_block):
 
-    def __init__(self, antenna='RX2', args='fpga=usrp1_fpga_4rx.rbf ', fft_size=1024, freq=2.412e9, gain=45, maxrate=0, samp_rate=10e6, spec='A:0', stream_args='', update_rate=.1, wire_format=''):
+    def __init__(self, antenna="RX2", args="fpga=usrp1_fpga_4rx.rbf ", fft_size=1024, freq=2.412e9, gain=45, maxrate=0, samp_rate=10e6, spec="A:0", stream_args="", update_rate=.1, wire_format=""):
         gr.top_block.__init__(self, "UHD FFT")
 
         ##################################################
@@ -55,13 +55,13 @@ class uhd_fft(gr.top_block):
         self.uhd_usrp_source_0.set_samp_rate(samp_rate)
         self.uhd_usrp_source_0.set_center_freq(float(freq), 0)
         self.uhd_usrp_source_0.set_gain(gain, 0)
-        self.uhd_usrp_source_0.set_antenna('RX2', 0)
+        self.uhd_usrp_source_0.set_antenna("RX2", 0)
         self.uhd_usrp_source_0.set_bandwidth(samp_rate, 0)
         self.fft_vcc_0 = fft.fft_vcc(fft_size, True, (window.blackmanharris(1024)), True, 1)
         self.blocks_stream_to_vector_0 = blocks.stream_to_vector(gr.sizeof_gr_complex*1, fft_size)
         self.blocks_nlog10_ff_0 = blocks.nlog10_ff(10, 1024, -60)
         self.blocks_head_0 = blocks.head(gr.sizeof_float*1024, 100)
-        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_float*1024, 'value', False)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_float*1024, "/home/bilal/Desktop/RMTRW/value", False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.blocks_complex_to_mag_squared_0 = blocks.complex_to_mag_squared(1024)
 
@@ -148,13 +148,12 @@ class uhd_fft(gr.top_block):
 
 
 def argument_parser():
-    description = 'UHD FFT Waveform Plotter'
-    parser = OptionParser(usage="%prog: [options]", option_class=eng_option, description=description)
+    parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
     parser.add_option(
-        "-A", "--antenna", dest="antenna", type="string", default='RX2',
+        "-A", "--antenna", dest="antenna", type="string", default="RX2",
         help="Set Antenna [default=%default]")
     parser.add_option(
-        "-a", "--args", dest="args", type="string", default='fpga=usrp1_fpga_4rx.rbf ',
+        "-a", "--args", dest="args", type="string", default="fpga=usrp1_fpga_4rx.rbf ",
         help="Set UHD device address args [default=%default]")
     parser.add_option(
         "", "--fft-size", dest="fft_size", type="intx", default=1024,
@@ -172,16 +171,16 @@ def argument_parser():
         "-s", "--samp-rate", dest="samp_rate", type="eng_float", default=eng_notation.num_to_str(10e6),
         help="Set Sample Rate [default=%default]")
     parser.add_option(
-        "", "--spec", dest="spec", type="string", default='A:0',
+        "", "--spec", dest="spec", type="string", default="A:0",
         help="Set Subdev [default=%default]")
     parser.add_option(
-        "", "--stream-args", dest="stream_args", type="string", default='',
+        "", "--stream-args", dest="stream_args", type="string", default="",
         help="Set Set additional stream args [default=%default]")
     parser.add_option(
         "", "--update-rate", dest="update_rate", type="eng_float", default=eng_notation.num_to_str(.1),
         help="Set Set GUI widget update rate [default=%default]")
     parser.add_option(
-        "", "--wire-format", dest="wire_format", type="string", default='',
+        "", "--wire-format", dest="wire_format", type="string", default="",
         help="Set Wire format [default=%default]")
     return parser
 

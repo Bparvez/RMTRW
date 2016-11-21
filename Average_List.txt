@@ -1,0 +1,13 @@
+Average for Sampling location A on Mon Nov 21 09:44:30 2016 is : -100.261
+Average for Sampling location A on Mon Nov 21 09:50:14 2016 is : -98.9937
+Average for Sampling location A on Mon Nov 21 09:51:54 2016 is : -97.6875
+Average for Sampling location B on Mon Nov 21 09:53:18 2016 is : -100.331
+Average for Sampling location A on Mon Nov 21 09:55:21 2016 is : -98.3699
+Average for Sampling location A on Mon Nov 21 09:56:10 2016 is : -99.7609
+Average for Sampling location A on Mon Nov 21 09:57:10 2016 is : -102.082
+Average for Sampling location A on Mon Nov 21 09:59:26 2016 is : -102.097
+Average for Sampling location A on Mon Nov 21 10:02:38 2016 is : -99.9205
+Average for Sampling location A on Mon Nov 21 10:08:30 2016 is : -98.4738
+Average for Sampling location B on Mon Nov 21 10:09:22 2016 is : -100.758
+Average for Sampling location C on Mon Nov 21 10:09:59 2016 is : -98.6417
+Average for Sampling location D on Mon Nov 21 10:11:30 2016 is : -99.8449
