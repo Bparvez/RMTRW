@@ -3,6 +3,7 @@
 
 # Scipt for the power spectral density measurement using USRP1
 # Author: Bilal Parvez
+# updated version with max
 
 import os
 import scipy
@@ -15,9 +16,9 @@ import time
 #fil = open('averaged', 'w')
 # sampling 10,10 Mhz chunks across the entire 100 Mhz spectrum from 2.4 to 2.5 Ghz
 date_time = time.strftime("%c")
-n = [2405000000 ,2415000000 ,2425000000,2435000000,2445000000,2455000000,2465000000,2475000000,2485000000,2495000000]   #for the sampling array
+n = [2412000000 ,2436000000 ,246000000,248390000]   #for the sampling array
 values = [] # array to hold the averaged frequency values
-samples = 100 # Number of samples need to adjust in head of ours.grc
+samples = 1 # Number of samples need to adjust in head of ours.grc
 i = 1 # for incrementing and changing the file numbers
 sampling_location=raw_input ("Enter location of the sampling:")  # for physical location of the sampling
 
@@ -41,7 +42,7 @@ for items in n:
     f = np.mean( np.array(np.array_split(array_from_file, samples)), axis=0 )
     fil.write(f) # write the a  veraged samples into the file
     fil.close()
-    f = np.mean(f) # take a mean , is it a good idea ?
+    f = max(f)#np.mean(f) # take a mean , is it a good idea ?
     #f = max(f) # trying with the maximum value in the array of the fft vector values , or max, either one of those
     values.append(f) # Putting values in an array to print at the end
     i = i+1  # incrementing the counter for the file name
